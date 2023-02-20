@@ -34,7 +34,8 @@
                                 <?php echo $task->task; ?>
                             </p>
                         </div>
-                        <button class="ml-4 bi bi-pencil-square update-icon"></button>
+                        <button class="ml-4 bi bi-pencil-square" onclick="updateTask(<?= $task->id; ?>)"></button>
+                        <button class="hidden ml-4 bi bi-trash remove-icon" onclick="deleteTask(<?= $task->id; ?>)"></button>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -51,7 +52,8 @@
 
         <form action="./update.php" method="POST" id="update-form" class="hidden bg-white text-slate-600 mt-10 shadow-md">
             <div class="flex justify-between">
-                <textarea class="p-2 focus:outline-none border w-full" name="" rows="1" placeholder="Write a task..."></textarea>
+                <textarea class="p-2 focus:outline-none border w-full" name="task" rows="1" placeholder="Write a task..."></textarea>
+                <input type="hidden" name="id">
                 <button class="bg-[#af7eeb] px-4 text-white">Update</button>
             </div>
         </form>
