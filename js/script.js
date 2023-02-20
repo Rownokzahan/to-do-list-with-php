@@ -38,8 +38,14 @@ function updateTask(id) {
     updateForm.classList.remove('hidden');
 }
 
-taskList.addEventListener('click', function (e) {
-    if (e.target.matches('.remove-icon')) {
-        updateForm.classList.remove('hidden');
-    }
-});
+function deleteTask(id) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            window.location.reload();
+        }
+    };
+    xhttp.open("POST", "delete.php");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("id=" + id);
+}
