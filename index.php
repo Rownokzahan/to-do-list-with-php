@@ -42,31 +42,34 @@
                     $query = "SELECT * FROM tasks ORDER BY id";
                     $statement = $pdo->query($query);
                     $tasks = $statement->fetchAll(PDO::FETCH_OBJ);
-
+                    $count = 1;
                     foreach ($tasks as $task) :
                     ?>
                         <tr class="hover">
-                            <th>1</th>
+                            <th><?php echo $count; ?></th>
                             <td><?php echo $task->name; ?></td>
-                            <td><img src="https://picsum.photos/seed/picsum/200/300" class="w-12 h-12 rounded" alt=""></td>
+                            <td><img src="./images/<?php echo $task->attachment; ?>" class="w-12 h-12 rounded" alt=""></td>
                             <td><?php echo $task->start_time; ?></td>
                             <td><?php echo $task->deadline; ?></td>
                             <td><?php echo $task->status; ?></td>
                             <td>
-                                <label for="update-modal" onclick="updateTask(<?= $task->id; ?>)" class="bi bi-pencil-square mr-8 text-[#8e40ee] text-xl"></label>
+                                <label for="update-modal" onclick="getTask(<?= $task->id; ?>)" class="bi bi-pencil-square mr-8 text-[#8e40ee] text-xl"></label>
                             </td>
                             <td>
                                 <button onclick="deleteTask(<?= $task->id; ?>)" class="bi bi bi-trash mr-4 text-red-500 text-xl"></button>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php
+                    $count++;
+                    endforeach;
+                    ?>
                 </tbody>
             </table>
         </div>
     </main>
 
     <footer class="text-center mt-16">
-        © copyright <?php echo "hi"; ?> by Rownok, all right reserved
+        © copyright <?php echo date("Y"); ?> by Rownok, all right reserved
     </footer>
 
     <!-- Put this part before </body> tag -->
@@ -79,35 +82,24 @@
                 <label for="insert-modal" class="btn btn-sm btn-circle">✕</label>
             </div>
             <!-- Insert Form -->
-            <form action="./insert.php" method="POST">
+            <form action="./insert.php" method="POST" enctype="multipart/form-data">
                 <div class="form-control w-full mb-4">
                     <label class="label">
                         <span class="label-text">Name</span>
                     </label>
-                    <input type="text" name="name" placeholder="Task Name" class="input input-bordered w-full" />
+                    <input type="text" name="name" placeholder="Task Name" class="input input-bordered w-full" required />
                 </div>
                 <div class="form-control w-full mb-4">
                     <label class="label">
                         <span class="label-text">Deadline</span>
                     </label>
-                    <input type="date" name="deadline" class="input input-bordered w-full" />
-                </div>
-                <div class="form-control w-full mb-4">
-                    <label class="label">
-                        <span class="label-text">Status</span>
-                    </label>
-                    <select name="status" class="select select-bordered flex-1">
-                        <option disabled selected>Status</option>
-                        <option>In Progress</option>
-                        <option>Complete</option>
-                        <option>Incomplete</option>
-                    </select>
+                    <input type="date" name="deadline" class="input input-bordered w-full" required />
                 </div>
                 <div class="form-control w-full mb-4">
                     <label class="label">
                         <span class="label-text">Attachment</span>
                     </label>
-                    <input type="file" class="file-input file-input-bordered w-full" />
+                    <input type="file" accept="image/*" name="image" class="file-input file-input-bordered w-full" required />
                 </div>
                 <button type="submit" class="bg-[#8e40ee] px-5 py-[6px] text-white font-semibold rounded shadow-md block ml-auto">Create</button>
             </form>
@@ -123,7 +115,8 @@
                 <label for="update-modal" class="btn btn-sm btn-circle">✕</label>
             </div>
             <!-- Update Form -->
-            <form action="./update.php" method="POST">
+            <form action="./update.php" method="POST" enctype="multipart/form-data" id="update-form">
+                <input type="hidden" name="id">
                 <div class="form-control w-full mb-4">
                     <label class="label">
                         <span class="label-text">Name</span>
@@ -151,12 +144,14 @@
                     <label class="label">
                         <span class="label-text">Attachment</span>
                     </label>
-                    <input type="file" class="file-input file-input-bordered w-full" />
+                    <input type="file" accept="image/*" name="image" class="file-input file-input-bordered w-full" required />
                 </div>
                 <button type="submit" class="bg-[#8e40ee] px-5 py-[6px] text-white font-semibold rounded shadow-md block ml-auto">Update</button>
             </form>
         </div>
     </div>
+
+    <script src="./js/script.js"></script>
 </body>
 
 </html>
