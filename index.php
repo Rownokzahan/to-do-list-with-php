@@ -48,7 +48,7 @@
                         <tr class="hover">
                             <th><?php echo $count; ?></th>
                             <td><?php echo $task->name; ?></td>
-                            <td><img src="./images/<?php echo $task->attachment; ?>" class="w-12 h-12 rounded" alt=""></td>
+                            <td><img src="<?php echo $task->attachment; ?>" class="w-12 h-12 rounded" alt=""></td>
                             <td><?php echo $task->start_time; ?></td>
                             <td><?php echo $task->deadline; ?></td>
                             <td><?php echo $task->status; ?></td>
